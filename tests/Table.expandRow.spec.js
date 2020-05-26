@@ -283,4 +283,23 @@ describe('Table.expand', () => {
       mount(<Demo />);
     }).not.toThrow();
   });
+
+  it('should render expandable only once on open', () => {
+    let renderCount = 0;
+
+    const wrapper = mount(
+      createTable({
+        expandedRowRender: () => {
+          renderCount += 1;
+        },
+      }),
+    );
+
+    wrapper
+      .find('ExpandIcon')
+      .first()
+      .simulate('click');
+
+    expect(renderCount).toBe(1);
+  });
 });
