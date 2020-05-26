@@ -493,4 +493,29 @@ describe('Table.Expand', () => {
     );
     expect(wrapper.find('.rc-table-expanded-row').length).toBe(0);
   });
+
+  it('should render expandable only once on open', () => {
+    const data = [{ key: 0, name: 'Lucy', age: 27 }];
+
+    let renderCount = 0;
+
+    const wrapper = mount(
+      createTable({
+        expandable: {
+          expandedRowRender: () => {
+            renderCount += 1;
+            
+          },
+        },
+        data,
+      }),
+    );
+
+    wrapper
+      .find('.rc-table-row-expand-icon')
+      .last()
+      .simulate('click');
+
+    expect(renderCount).toBe(1);
+  });
 });
